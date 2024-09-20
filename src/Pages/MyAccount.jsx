@@ -1,22 +1,35 @@
 import { useContext, useEffect, useState } from 'react';
 import '../CSS/MyAccount.css';
 import profileImage from '../Img/PeopleClient.png';
-import maxImage from '../Img/Pet.jpg';
-import bolilloImage from '../Img/Pet.jpg';
-import bombomImage from '../Img/Pet.jpg';
 import axios from 'axios';
 import { MarvicContext } from '../Context/Context';
+import { useNavigate } from "react-router-dom";
 
 
 const MyAccount = () => {
-  const{ token, userId } = useContext(MarvicContext); 
-  const [ userData, setUserData ] = useState(null);
-  const [ loading, setLoading ] = useState(true);
-  const [ error, setError ] = useState(null);
+  const { token, userId } = useContext(MarvicContext);
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeTab, setActiveTap] = useState('misMascotas')
+  const [data, setData] = useState({
+    name: '',
+    specie: '',
+    gender: '',
+    size: '',
+    age: '',
+    breed: '',
+    weight: '',
+    image: null
+  })
+  const [petsData, setPEtsData] = useState([])
+  const navigate = useNavigate()
 
-  useEffect(() =>{
-    
-    const fetchData = async() =>{
+  const { name, specie, gender, size, age, breed, weight, image } = data;
+
+  useEffect(() => {
+
+    const fetchData = async () => {
       if (!token || !userId) {
         setError("No se encontraron las credenciales");
         setLoading(false);
@@ -25,32 +38,80 @@ const MyAccount = () => {
 
 
       try {
-        const response = await axios.get(`http://82.180.132.46:8000/api/v1/users/${userId}`,{
-          headers:{
-            Authorization:`Bearer ${token}`,
+        const response = await axios.get(`http://82.180.132.46:8000/api/v1/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           }
-        }) 
+        })
         console.log("Datos del usuario", response.data);
         setUserData(response.data)
+
+        const petResponse = await axios.get(`http://82.180.132.46:8000/api/v1/users/${userId}/pets/`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        console.log("Mascotas del usuario", petResponse.data);
+        setPEtsData(petResponse.data)
+
       } catch (error) {
-        setError(error.message) 
-      }finally{
+        setError(error.message)
+      } finally {
         setLoading(false)
       }
     }
     fetchData();
   }, [token, userId])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!name || !specie || !gender || !size || !age || !breed || !weight || !image) {
+      alert('Por favor completa todos los campos')
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('name', name)
+      formData.append('specie', specie)
+      formData.append('gender', gender)
+      formData.append('size', size)
+      formData.append('age', age)
+      formData.append('breed', breed)
+      formData.append('weight', weight)
+      formData.append('image', image)
+
+      const respone = await axios.post(`http://82.180.132.46:8000/api/v1/users/${userId}/pets/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      console.log('Mascota resgistrada', respone.data);
+      alert("Mascota resgistrada de forma correcta")
+    } catch (error) {
+      console.error("Error al registrar a la mascota", error);
+      alert("Error al registrar a la mascota")
+    }
+  }
+
   if (loading) {
-    return(
+    return (
       <p>Cargando...</p>
     )
   }
 
   if (error) {
-    return(
+    return (
       <p>Error: {error}</p>
     )
+  }
+
+  const handlePetClick = (petId) =>{
+    navigate(`/acountpet/${petId}`)
   }
 
   return (
@@ -60,14 +121,14 @@ const MyAccount = () => {
 
           <div className="col-md-4 d-flex flex-column align-items-center bg-white p-4 shadow-sm">
             <img src={profileImage} alt="Foto de perfil" className="rounded-circle mb-3" width="100" height="100" />
-            {userData &&(
+            {userData && (
               <>
-              <h5 className="fw-bold">{userData.name} {userData.lastname}</h5>
-              <p>Email:</p>
-              <span className='fw-bold mb-2'> {userData.auth_data.email} </span>
-              <p>Teléfono:</p>
-              <span className='fw-bold'>{userData.phone_number}</span>
-              </> 
+                <h5 className="fw-bold">{userData.name} {userData.lastname}</h5>
+                <p>Email:</p>
+                <span className='fw-bold mb-2'> {userData.auth_data.email} </span>
+                <p>Teléfono:</p>
+                <span className='fw-bold'>{userData.phone_number}</span>
+              </>
             )}
           </div>
 
@@ -75,74 +136,110 @@ const MyAccount = () => {
           <div className="col-md-8 p-4">
             <ul className="nav nav-tabs mb-3">
               <li className="nav-item">
-                <a className="nav-link active" data-bs-toggle="tab" href="#misMascotas">Mis mascotas</a>
+                <a className={`nav-link ${activeTab === 'misMascotas' ? 'active' : ''}`} onClick={() => setActiveTap('misMascotas')} href='#misMascotas'> Mis mascotas </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-dark" data-bs-toggle="tab" href="#registrarMascota">Registrar mascota</a>
+                <a className={`nav-link text-dark ${activeTab === 'registrarMascota' ? 'active' : ''}`} onClick={() => setActiveTap('registrarMascota')} href='#registrarMascota'> Registrar mascota </a>
               </li>
             </ul>
 
             <div className="tab-content">
-              {/* Sección de Mis Mascotas */}
-              <div className="tab-pane fade show active" id="misMascotas">
-                <div className="list-group">
-                  <div className="list-group-item d-flex align-items-center mb-2 bg-info-subtle">
-                    <img src={maxImage} alt="Max" className="rounded-circle" width="50" height="50" />
-                    <div className="ms-3">
-                      <h6 className="mb-0">Max</h6>
-                      <small>Chihuahua</small>
-                    </div>
-                  </div>
-                  <div className="list-group-item d-flex align-items-center mb-2 bg-info-subtle">
-                    <img src={bolilloImage} alt="Bolillo" className="rounded-circle" width="50" height="50" />
-                    <div className="ms-3">
-                      <h6 className="mb-0">Bolillo</h6>
-                      <small>Mestizo</small>
-                    </div>
-                  </div>
-                  <div className="list-group-item d-flex align-items-center mb-2 bg-info-subtle">
-                    <img src={bombomImage} alt="Bombom" className="rounded-circle" width="50" height="50" />
-                    <div className="ms-3">
-                      <h6 className="mb-0">Bombom</h6>
-                      <small>Perico</small>
-                    </div>
+              {activeTab === 'misMascotas' && (
+                <div className="tab-pane fade show active" id="misMascotas">
+                  <div className="list-group">
+                    {petsData.length > 0 ? (
+                      petsData.map((pet) => (
+                        <div key={pet.id} className="list-group-item d-flex align-items-center mb-2 bg-info-subtle" onClick={() => handlePetClick(pet.id)} style={{ cursor: 'pointer'}}>
+                          <img src={pet.appearance.image} alt={pet.name} className="rounded-circle" width="50" height="50" />
+                          <div className="ms-3">
+                            <h6 className="mb-0"> {pet.basic_info.name} </h6>
+                            <small> {pet.basic_info.breed} </small>
+                          </div>
+                        </div>
+                      ))
+                    ):(
+                      <p>No tienes mascotas registradas</p>
+                    )}
                   </div>
                 </div>
-              </div>
+              )}
 
-              {/* Sección de Registrar Mascota */}
-              <div className="tab-pane fade" id="registrarMascota">
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="nombreMascota" className="form-label">Nombre de la mascota</label>
-                    <input type="text" className="form-control" id="nombreMascota" />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="razaMascota" className="form-label">Raza de la mascota</label>
-                    <input type="text" className="form-control" id="razaMascota" />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="tipoMascota" className="form-label">Tipo de mascota</label>
-                    <select className="form-select" id="tipoMascota">
-                      <option>Perro</option>
-                      <option>Gato</option>
-                      <option>Ave</option>
-                      <option>Otro</option>
-                    </select>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="edadMascota" className="form-label">Edad de la mascota</label>
-                    <input type="number" className="form-control" id="edadMascota" />
-                  </div>
-                  <div className="d-grid">
-                    <button type="submit" className="btn btn-primary">Registrar Mascota</button>
-                  </div>
-                </form>
-              </div>
+              {activeTab === 'registrarMascota' && (
+                <div className="tab-pane fade show active" id="registrarMascota">
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-floating mb-3">
+                      <input type="text" className='form-control' id='nameInput' placeholder='Danger' value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} />
+                      <label htmlFor="nameInput">Nombre de la mascota</label>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <select className='form-select' id="specieInput" aria-label='Floating label select' value={data.specie} onChange={(e) => setData({ ...data, specie: e.target.value })}>
+                        <option value="option1">Especie</option>
+                        <option value="Perro">Perro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                      <label htmlFor="specieInput">Especie</label>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <select className='form-select' id="genderSelect" aria-label='Floating label select' value={data.gender} onChange={(e) => setData({ ...data, gender: e.target.value })}>
+                        <option value="option1">Genero de la mascota</option>
+                        <option value="Macho">Macho</option>
+                        <option value="Hembra">Hembra</option>
+                      </select>
+                      <label htmlFor="genderSelect">Genero de la mascota</label>
+                    </div>
+
+                    <div className="row g-2 mb-3">
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <input type="text" className='form-control' id='ageInput' placeholder='5' value={data.age} onChange={(e) => setData({ ...data, age: e.target.value })} />
+                          <label htmlFor="ageInput">Edad</label>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <select className='form-select' id="sizeInput" aria-label='FLoating label select' value={data.size} onChange={(e) => setData({ ...data, size: e.target.value })}>
+                            <option value="">Tamaño</option>
+                            <option value="Grande">Grande</option>
+                            <option value="Mediano">Mediano</option>
+                            <option value="Chico">Chico</option>
+                          </select>
+                          <label htmlFor="sizeInput">Tamaño</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row g-2 mb-3">
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <input type="text" className='form-control' id='breedInput' placeholder='chihuhua' value={data.breed} onChange={(e) => setData({ ...data, breed: e.target.value })} />
+                          <label htmlFor="breedInput">Raza</label>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <input type="number" className='form-control' id='weightInput' placeholder='5' value={data.weight} onChange={(e) => setData({ ...data, weight: e.target.value })} />
+                          <label htmlFor="weightInput">Peso</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <input type="file" className='form-control' id='imageInput' placeholder='foto' onChange={(e) => setData({ ...data, image: e.target.files[0] })} />
+                      <label htmlFor="imageInput">Foto de la mascota</label>
+                    </div>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <button className='btn btn-primary'>Añadir</button>
+                    </div>
+                  </form>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 }

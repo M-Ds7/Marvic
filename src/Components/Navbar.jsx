@@ -17,21 +17,21 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="navbar bg-persian">
+            <nav className="navbar bg-persian ">
                 <div className="container">
                     <NavLink className="navbar-brand" to="/">
                         <img src={MARVIC} alt="logo de marvic" width="40" height="40" />
                     </NavLink>
                     <ul className="nav justify-content-center">
                         <li className="nav-item ">
-                            <NavLink className="nav-link text-black" to="/" >Home</NavLink>
+                            <NavLink className="nav-link text-black" to="/" > <strong>Home</strong> </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link text-black" to="/blog">Blog</NavLink>
+                            <NavLink className="nav-link text-black" to="/blog"> <strong>Blog</strong> </NavLink>
                         </li>
                         {isUser && (
                             <li className="nav-item">
-                                <NavLink className="nav-link text-black" to="/myaccount">Mi cuenta</NavLink>
+                                <NavLink className="nav-link text-black" to="/myaccount"> <strong>Mi cuenta</strong> </NavLink>
                             </li>
                         )}
                     </ul>
@@ -39,10 +39,10 @@ const Navbar = () => {
                         {!isUser ? (
                             <>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link text-black" to="/login">Iniciar sesion</NavLink>
+                                    <NavLink className="nav-link text-black" to="/login"> <strong>Iniciar sesion</strong> </NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link text-black" to="/signup">Registrate</NavLink>
+                                    <NavLink className="nav-link text-black" to="/signup"> <strong>Registrate</strong> </NavLink>
                                 </li>
                             </>
                         ) : (

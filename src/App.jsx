@@ -9,6 +9,7 @@ import NotFound from './Pages/NotFound'
 import Navbar from "./Components/Navbar"
 import Footer from "./Components/Footer"
 import { MarvicProvider } from "./Context/Context"
+import AccountPet from "./Pages/AccountPet"
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -18,6 +19,7 @@ const AppRoutes = () => {
     { path: "/login", element: <LogIn /> },
     { path: "/signup", element: <SignUp /> },
     { path: "/*", element: <NotFound /> },
+    { path: "/acountpet/:petId", element: <AccountPet/> }
   ])
 
   return routes
