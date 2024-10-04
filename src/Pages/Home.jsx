@@ -3,7 +3,7 @@ import '../CSS/Home.css'
 
 import ImageHome from "../Img/ImageHome 1.png";
 import ImageStetica from "../Img/imageStetica.png"
-import CarMarvic from '../Img/CarMarvic.png'
+import Conocenos from '../Img/Conocenos.jpg'
 
 const Home = () => {
   return (
@@ -11,91 +11,91 @@ const Home = () => {
       <Layout>
         <div className="container-fluid bg-container">
           <div className="row">
-            <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <div className="col-lg-6 d-flex flex-column align-items-center justify-content-center text-center text-lg-start">
               <h1 className="fw-bold">Marvic</h1>
-              <h3 className="text-md-start">
+              <h3>
                 <span className="d-block text-center">¡Al servicio</span>
                 <span className="d-block text-center">de</span>
                 <span className="d-block">Super mascotas!</span>
               </h3>
             </div>
-            <div className="col-md-6 d-flex align-items-center">
-              <img src={ImageHome} alt="Imagens de mascotas" height="450" width="auto" />
+            <div className="col-lg-6 d-flex align-items-center justigy-content-center">
+              <img src={ImageHome} alt="Imagens de mascotas" className="img-fluid"/>
             </div>
           </div>
         </div>
         <div className="container my-4">
           <h2 className="text-center display-5 fw-bold mb-5">Nuestros servicios</h2>
           <div className="row g-4">
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de estética canina" width="100" height="auto" />
+                <img src={ImageStetica} alt="Imagen de estética canina" width="100" className="img-fluid"/>
                 <h6 className="mt-2">Estética canina</h6>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de pet shop" width="100" height="auto" />
+                <img src={ImageStetica} alt="Imagen de pet shop" width="100" className="img-fluid"/>
                 <h6 className="mt-2">Pet shop</h6>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de laboratorio" width="100" height="auto" />
+                <img src={ImageStetica} alt="Imagen de laboratorio" width="100" className="img-fluid"/>
                 <h6 className="mt-2">Laboratorio</h6>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de ultrasonido" width="100" height="auto" />
+                <img src={ImageStetica} alt="Imagen de ultrasonido" width="100" className="img-fluid" />
                 <h6 className="mt-2">Ultrasonido</h6>
               </div>
             </div>
           </div>
 
           <div className="row g-4 mt-4">
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de dental" width="100" height="auto" />
+                <img src={ImageStetica} alt="Imagen dental" className="img-fluid" width="100"/>
                 <h6 className="mt-2">Dental</h6>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className=" col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de Cirujia" width="100" height="auto" />
-                <h6 className="mt-2">Cirujias</h6>
+                <img src={ImageStetica} alt="Imagen de cirugía" width="100" className="img-fluid"/>
+                <h6 className="mt-2">Cirugías</h6>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de hozpitalizacion" width="100" height="auto" />
-                <h6 className="mt-2">Hozpitalización</h6>
+                <img src={ImageStetica} alt="Imagen de hospitalización" width="100" className="img-fluid"/>
+                <h6 className="mt-2">Hospitalización</h6>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-sm-6 col-md-3 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de calendario" width="100" height="auto" />
-                <h6 className="mt-2">Calendario de vacunacion</h6>
+                <img src={ImageStetica} alt="Imagen de calendario" width="100" className="img-fluid"/>
+                <h6 className="mt-2">Calendario de vacunación</h6>
               </div>
             </div>
           </div>
 
           <div className="row g-4 mt-4">
-            <div className="col-md-4 d-felx justify-content-center">
+            <div className="col-sm-6 col-md-4 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de croqueta" width="100" height="auto" />
-                <h6 className="mt-2">Croqueteria</h6>
+                <img src={ImageStetica} alt="Imagen de croquetas" width="100" className="img-fluid"/>
+                <h6 className="mt-2">Croquetería</h6>
               </div>
             </div>
-            <div className="col-md-4 d-felx justify-content-center">
+            <div className="col-sm-6 col-md-4 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de hotel canino" width="100" height="auto" />
+                <img src={ImageStetica} alt="Imagen de hotel canino" width="100" className="img-fluid"/>
                 <h6 className="mt-2">Hotel Canino</h6>
               </div>
             </div>
-            <div className="col-md-4 d-felx justify-content-center">
+            <div className="col-sm-6 col-md-4 d-flex justify-content-center">
               <div className="d-flex flex-column align-items-center">
-                <img src={ImageStetica} alt="Imagen de farmacia canina" width="100" height="auto" />
+                <img src={ImageStetica} alt="Imagen de farmacia canina" width="100" className="img-fluid"/>
                 <h6 className="mt-2">Farmacia canina</h6>
               </div>
             </div>
@@ -103,17 +103,19 @@ const Home = () => {
         </div>
 
         <div className="bg-container">
-          <div className="row">
-            <h3 className="text-center my-4 fw-bold">¿Quienes somos?</h3>
-            <div className="col-md-6 d-flex justify-content-center">
-              <img src={CarMarvic} alt="imagen del carro de marvic" width="400" height="auto" className="m-4" />
-            </div>
-            <div className="col-md-6">
-              <h5>
-                Clínica Veterinaria Marvic es un lugar dedicado completamente <br /> al servicio de tu mascota,
-                estamos comprometidos exclusivamente <br /> a la salud y bienestar de nuestros compañeros  de vida de 4 patas. <br />
-                La responsabilidad, honestidad, calidad y amor por los animales <br /> son la base de nuestro trabajo.
-              </h5>
+          <div className="container col-xl-10 col-xxl-8 px-4 py-5 ">
+            <div className="row align-items-center g-lg-5 py-5">
+              <div className="col-lg-7 text-center text-lg-start">
+                <h1 className="display-4 fw-bold lh-1 text-body-emphasis mb-3">¿Quiénes somos?</h1>
+                <p className="col-lg-10 fs-4">Clínica Veterinaria Marvic es un lugar dedicado completamente
+                  al servicio de tu mascota. Estamos comprometidos exclusivamente
+                  a la salud y bienestar de nuestros compañeros de vida de 4 patas.
+                  La responsabilidad, honestidad, calidad y amor por los animales
+                  son la base de nuestro trabajo.</p>
+              </div>
+              <div className="col-md-10 mx-auto col-lg-5">
+                <img src={Conocenos} alt="Conócenos" className="rounded-3 img-fluid" />
+              </div>
             </div>
           </div>
         </div>
@@ -122,4 +124,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

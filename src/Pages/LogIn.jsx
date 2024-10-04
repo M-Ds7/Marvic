@@ -2,63 +2,73 @@ import axios from "axios"
 import { useContext, useState } from "react"
 import { MarvicContext } from "../Context/Context"
 import { useNavigate } from "react-router-dom";
+import imgMarvic from '../Img/ImgLogIn.jpg'
+
 
 
 const LogIn = () => {
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-  const [ error, setError ] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState("");
   const { login, setToken } = useContext(MarvicContext);
   const navigate = useNavigate()
-
+  
+  const Api_Base_Url = import.meta.env.VITE_URL_API;
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://82.180.132.46:8000/api/v1/auth/login',{
-      email : email,
-      password : password
+    axios.post(`${Api_Base_Url}/api/v1/auth/login`, {
+      email,
+      password
     })
-    .then(response => {
-      const token = response.data.token;
-      const userId = response.data.user_id;
-      setToken(token);
-      login(userId);
-      navigate('/myaccount')
-      console.log(response.data);
-    })
-    .catch(error => {
-      setError("Credenciales incorrectas. Inténtalo de nuevo")
-      console.log('Error', error);
-    })
+      .then(response => {
+        const token = response.data.token;
+        const userId = response.data.user_id;
+        setToken(token);
+        login(userId);
+        navigate('/myaccount')
+        console.log(response.data);
+      })
+      .catch(error => {
+        if (error.response && error.response.data && error.response.data.codes) {
+          setError(error.response.data.details);
+        } else {
+          setError('Credenciales incorrectas. Intentalo de nuevo')
+        }
+        console.log('Error', error);
+      })
   }
 
   return (
     <>
       <div className="container my-4">
-        <div className="row">
-          <div className="col-md-6">
-            <img src="" alt="imagen de servicios de marvic" />
+        <div className="row align-itmes-center">
+          <div className="col-lg-6 d-none d-lg-flex justify-contet-center align-itmes-center">
+            <img src={imgMarvic} alt="imagen de servicios de marvic" className=" img-fluid rounded"/>
           </div>
-          <div className="col-md-6">
+          <div className="col-lg-6 col-md-12">
             <h2 className="text-center">Marvic</h2>
-            <h4 className="text-center ">Bienvenido</h4>
-            <form action="" onSubmit={handleSubmit}>
-              <div className="form-floating mb-3">
-                <input type="email" name="emailuser" id="emailinput" className="form-control" placeholder="exmaple@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+            <h4 className="text-center mb-4">Bienvenido</h4>
+            <form onSubmit={handleSubmit}>
+              <div className="form-floating mb-4">
+                <input type="email" id="emailinput" className="form-control" placeholder="exmaple@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <label htmlFor="emailinput">Email</label>
               </div>
-              <div className="form-floating mb-3">
-                <input type="password" name="passworduser" id="passwordinput" className="form-control" placeholder="1234567890"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+              <div className="form-floating mb-4">
+                <input type="password" id="passwordinput" className="form-control" placeholder="**********"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <label htmlFor="passwordinput">Contraseña</label>
               </div>
               {error && <p className="text-danger">{error}</p>}
-              <button className="btn btn-primary col-md-12">Iniciar sesion</button>
+              <div className="d-grid gap-2">
+                <button className="btn btn-primary btn-block ">Iniciar sesion</button>
+              </div>
             </form>
           </div>
         </div>

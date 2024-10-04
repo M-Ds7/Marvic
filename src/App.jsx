@@ -10,6 +10,8 @@ import Navbar from "./Components/Navbar"
 import Footer from "./Components/Footer"
 import { MarvicProvider } from "./Context/Context"
 import AccountPet from "./Pages/AccountPet"
+import ChangeDataPet from "./Pages/ChangeDataPet"
+import ChangePassword from "./Pages/ChangePassword"
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -19,7 +21,10 @@ const AppRoutes = () => {
     { path: "/login", element: <LogIn /> },
     { path: "/signup", element: <SignUp /> },
     { path: "/*", element: <NotFound /> },
-    { path: "/acountpet/:petId", element: <AccountPet/> }
+    { path: "/acount/pets/:petId", element: <AccountPet/> },
+    { path: "/changeDataPet/:petId", element: <ChangeDataPet/>},
+    { path: "/changepassword/:userId", element:<ChangePassword/> }
+
   ])
 
   return routes
