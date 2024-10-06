@@ -12,6 +12,9 @@ import { MarvicProvider } from "./Context/Context"
 import AccountPet from "./Pages/AccountPet"
 import ChangeDataPet from "./Pages/ChangeDataPet"
 import ChangePassword from "./Pages/ChangePassword"
+import AdminRoute from "./Context/AdminRoute"
+import AdminDashboard from "./Pages/AdminDashboard"
+import DetailsUser from "./Pages/DetailsUser"
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -23,8 +26,9 @@ const AppRoutes = () => {
     { path: "/*", element: <NotFound /> },
     { path: "/acount/pets/:petId", element: <AccountPet/> },
     { path: "/changeDataPet/:petId", element: <ChangeDataPet/>},
-    { path: "/changepassword/:userId", element:<ChangePassword/> }
-
+    { path: "/changepassword/:userId", element:<ChangePassword/> },
+    { path: "/admin", element: <AdminRoute> <AdminDashboard/> </AdminRoute>},
+    { path: "/detailUser/:userId", element: <AdminRoute> <DetailsUser/> </AdminRoute>  }
   ])
 
   return routes

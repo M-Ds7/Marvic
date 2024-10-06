@@ -10,6 +10,7 @@ const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("");
+  const [ loading, setLoading ] = useState(false)
   const { login, setToken } = useContext(MarvicContext);
   const navigate = useNavigate()
   
@@ -17,6 +18,8 @@ const LogIn = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError('')
+    setLoading(true)
 
     axios.post(`${Api_Base_Url}/api/v1/auth/login`, {
       email,
@@ -25,9 +28,24 @@ const LogIn = () => {
       .then(response => {
         const token = response.data.token;
         const userId = response.data.user_id;
+        const role = response.data.role;
+        const adminId = role === 'ADMINISTRATOR' ? response.data.user_id : null;
+
+        console.log('token', token);
+        console.log('UserId', userId);
+        console.log('role', role);
+        console.log('adminId', adminId);
+        
+
         setToken(token);
-        login(userId);
-        navigate('/myaccount')
+        login(token, userId, role, adminId);
+
+        if (role === 'ADMINISTRATOR') {
+          navigate('/admin')
+        } else {
+          navigate('/myaccount')
+        }
+        
         console.log(response.data);
       })
       .catch(error => {
@@ -37,6 +55,9 @@ const LogIn = () => {
           setError('Credenciales incorrectas. Intentalo de nuevo')
         }
         console.log('Error', error);
+      })
+      .finally(() =>{
+        setLoading(false)
       })
   }
 
@@ -67,7 +88,7 @@ const LogIn = () => {
               </div>
               {error && <p className="text-danger">{error}</p>}
               <div className="d-grid gap-2">
-                <button className="btn btn-primary btn-block ">Iniciar sesion</button>
+                <button className="btn btn-primary btn-block "> {loading ? 'Iniciando sesión...' : 'Iniciar sesión'} </button>
               </div>
             </form>
           </div>

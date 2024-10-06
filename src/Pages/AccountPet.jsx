@@ -171,7 +171,7 @@ const AccountPet = () => {
     return (
         <div className="container my-4">
             <div className="row">
-                <div className="col-12 col-lg-6 mb-4 ">
+                <div className="col-md-12 ">
                     <div className="card">
                         <div className="row g-0">
                             <div className="col-md-6">
@@ -186,7 +186,7 @@ const AccountPet = () => {
                                     <p>No hay imagen disponible</p>
                                 )}
                             </div>
-                            <div className="col-12 col-lg-6">
+                            <div className="col-md-6">
                                 <div className="card-body">
                                     <h4 className="card-title text-center">{dataPet.basic_info.name}</h4>
 
@@ -224,7 +224,7 @@ const AccountPet = () => {
                                         <div className="modal-dialog">
                                             <div className="modal-content">
                                                 <div className="modal-header">
-                                                    <h1 className="modal-title" id="exampleModalLabel">Agendar cita</h1>
+                                                    <h1 className="modal-title fs-5" id="exampleModalLabel">Agendar cita</h1>
                                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
@@ -235,7 +235,7 @@ const AccountPet = () => {
 
                                                     </div>
                                                 )}
-                                                <form onSubmit={handleSubmit}>
+                                                <form action="" onSubmit={handleSubmit}>
                                                     <div className="modal-body">
                                                         <div className="form-floating mb-3">
                                                             <input type="datetime-local" className="form-control" id="floatingCitation" placeholder="2024-09-24T15:54" value={appointmentData.timestamp} onChange={(e) => setAppointmentData({ ...appointmentData, timestamp: e.target.value })} />
