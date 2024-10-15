@@ -9,6 +9,8 @@ export const MarvicProvider = ({ children }) => {
     const [userId, setUserId] = useState(() => localStorage.getItem('userId') || '');
     const [role, setRole] = useState(() => localStorage.getItem('role') || '');
 
+    const isAdmin = role === "ADMINISTRATOR"
+
     useEffect(() => {
         if (token) {
             localStorage.setItem('token', token);
@@ -68,6 +70,7 @@ export const MarvicProvider = ({ children }) => {
             isUser,
             userId,
             adminId,
+            isAdmin,
             role,
             logout,
             login

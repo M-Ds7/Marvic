@@ -10,9 +10,20 @@ const SignUp = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const [ successMessage, setSuccessMessage ] = useState('')
-  const [ loading, setLoading ] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [loading, setLoading] = useState(false)
   const Api_Base_Url = import.meta.env.VITE_URL_API;
+  const [showPassword, setShowPassword] = useState({
+    showCurrent: false,
+    showNew: false
+  })
+
+  const toggleShowPassword = (type) => {
+    setShowPassword({
+      ...showPassword,
+      [type]: !showPassword[type]
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -85,12 +96,17 @@ const SignUp = () => {
                 />
                 <label htmlFor="emailusers" >Email</label>
               </div>
-              <div className="form-floating mb-3">
-                <input type="password" className="form-control" id="passwordusers" placeholder="1234567890" aria-label="contraseña del usuario"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <label htmlFor="passwordusers" >Contraseña</label>
+              <div className="input-group mb-3">
+                <span className="input-group-text d-flex" onClick={() => toggleShowPassword('showCurrent')} style={{ cursor: 'pointer', color: 'blue', margin: '0 0 0 10px', display: 'inline-block' }}>
+                  {showPassword.showCurrent ? "Ocultar" : "Mostrar"}
+                </span>
+                <div className="form-floating">
+                  <input type={showPassword.showCurrent ? "text" : "password"} className="form-control" id="passwordusers" placeholder="1234567890" aria-label="contraseña del usuario"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <label htmlFor="passwordusers" >Contraseña</label>
+                </div>
               </div>
               <div className="d-grid gap-2">
                 <button className="btn btn-primary btn-block" aria-label="registrarme en marvic">Registrarme</button>
