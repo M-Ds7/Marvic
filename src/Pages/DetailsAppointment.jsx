@@ -33,13 +33,11 @@ const DetailsAppointment = () => {
                 })
                 setAppointmentData(response.data)
                 setState(response.data.appointment_data.details.status || "pending");
-                console.log('detalles', response.data);
+                console('detalles', response.data);
                 
             } catch (error) {
                 if (error.response) {
-                    console.log('Error Response:', error.response);
                 } else {
-                    console.log('Error:', error.message);
                 }
 
                 setError('Error al obtener detalles de la cita');
@@ -61,11 +59,9 @@ const DetailsAppointment = () => {
                 }
             });
             setSuccess('Estatus actualizado exitosamente');
-            console.log("Status to be sent:", state);
 
 
         } catch (error) {
-            console.log('Error Details:', error.response?.data);
             setError('Error al actualizar el estatus');
         } finally {
             setLoading(false);
@@ -98,20 +94,13 @@ const DetailsAppointment = () => {
             setSuccess('Historial médico actualizado exitosamente')
             setShowModal(false)
 
-            console.log('Issue:', issue);
-            console.log('Images:', images);
-
-            console.log('Response date mascotas', ResponseMedicalHistory.data);
-
             setIssue('')
             setImages([])
 
         } catch (error) {
             if (error.response && error.response.data) {
-                console.log('Error', error.response.data);
                 setError(error.response.data.details || 'Error al subir el historial médico');
             } else {
-                console.log('Error', error.message);
                 setError('Error al subir el historial médico');
             }
         }

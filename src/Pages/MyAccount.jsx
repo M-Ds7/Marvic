@@ -95,7 +95,6 @@ const MyAccount = () => {
         setSuccessMessage('')
       }, 3000)
       setPEtsData((prevPets) => [...prevPets, response.data.data]);
-      console.log('Datos de mascota de post', response.data);
       
       setData({
         name: '',
@@ -118,7 +117,6 @@ const MyAccount = () => {
 
   const handleDeletePet = async (petId, e) => {
     e.stopPropagation();
-    console.log('Id de la mascota a eliminar', petId);
 
     try {
       const response = await axios.delete(`${Api_Base_Url}/api/v1/users/${userId}/pets/${petId}`, {
@@ -126,7 +124,6 @@ const MyAccount = () => {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log('Mascota eliminada de forma correcta', response.data);
       setPEtsData(petsData.filter(pet => pet.id !== petId))
       setSuccessMessage("Mascota eliminada de forma correcta")
       setTimeout(() => {
@@ -136,7 +133,6 @@ const MyAccount = () => {
       if (error.response && error.response.status === 404) {
         alert('La mascota no fue encontrada.');
       } else {
-        console.log('Error al eliminar la mascota', error.message);
         alert('Error al eliminar la mascota.');
       }
     }

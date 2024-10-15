@@ -48,7 +48,6 @@ const EditPetForm = () => {
                     weight: petData.appearance.weight,
                     image: petData.appearance.image,
                 });
-                console.log('datos', response.data);
 
             } catch (error) {
                 setError(error.message);

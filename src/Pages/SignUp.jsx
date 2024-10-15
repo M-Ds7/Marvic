@@ -41,7 +41,6 @@ const SignUp = () => {
 
       .then(response => {
         setSuccessMessage("Usuario registrado con éxito")
-        console.log(response.data);
       })
       .catch(error => {
         setLoading(false)
@@ -49,9 +48,7 @@ const SignUp = () => {
           const errorDetails = error.response.data.details;
           setError(errorDetails)
         } else {
-          console.log('Error al registrarse');
         }
-        console.log('Error', error);
       })
   }
 

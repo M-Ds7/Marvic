@@ -41,7 +41,6 @@ const AccountPet = () => {
                     }
                 })
                 setAppointments(response.data)
-                console.log('Datos de la cita', response.data);
 
             } catch (error) {
                 setError('Error al obtener las citas')
@@ -59,7 +58,6 @@ const AccountPet = () => {
             })
 
             setAppointments(appointments.filter(appointment => appointment.id !== appointmentId))
-            console.log('Cita eliminada de forma correcta');
         } catch (error) {
             setError('Error al eliminar cita')
         }
@@ -94,7 +92,6 @@ const AccountPet = () => {
                 }
             })
             setAppointments([...appointments, response.data.data])
-            console.log('Cita agendada de manera exitosa', response.data);
 
             setAllertMessage('Cita agendada de manera exitosa')
             setAlertType('success')
@@ -110,7 +107,6 @@ const AccountPet = () => {
 
         } catch (error) {
             setError(error.message)
-            console.log(error.response?.data);
 
             setAllertMessage('Hubo un error al agendar la cita. por favor intenta de nuevo')
             setAlertType('danger')
@@ -132,7 +128,6 @@ const AccountPet = () => {
                     }
                 });
 
-                console.log("Datos de la mascota", response.data);
                 setDataPet(response.data);
             } catch (error) {
                 setError(error.message);
@@ -159,7 +154,6 @@ const AccountPet = () => {
                     image: null,
                 },
             }));
-            console.log('ResponseDeleteImage', ResponseDeleteImage.data);
 
         } catch (error) {
             setError(error.message)

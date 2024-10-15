@@ -24,8 +24,6 @@ const AdminDashboard = () => {
         return
       }
 
-      console.log('Admin ID', adminId);
-      console.log('token', token);
       try {
         //obtener datos del administrador 
         const response = await axios.get(`${Api_Base_Url}/api/v1/admins/${adminId}`, {
@@ -33,7 +31,7 @@ const AdminDashboard = () => {
             Authorization: `Bearer ${token}`
           }
         })
-        console.log('Admin', response.data);
+
         setSuccess('Los datos se han cargado de forma correcta')
         setAdminData(response.data)
 
@@ -48,7 +46,6 @@ const AdminDashboard = () => {
           }
         })
         setDataUser(responsUser.data)
-        console.log('DataUser', responsUser.data);
 
 
 

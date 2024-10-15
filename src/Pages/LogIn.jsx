@@ -42,12 +42,6 @@ const LogIn = () => {
         const role = response.data.role;
         const adminId = role === 'ADMINISTRATOR' ? response.data.user_id : null;
 
-        console.log('token', token);
-        console.log('UserId', userId);
-        console.log('role', role);
-        console.log('adminId', adminId);
-
-
         setToken(token);
         login(token, userId, role, adminId);
 
@@ -57,7 +51,6 @@ const LogIn = () => {
           navigate('/myaccount')
         }
 
-        console.log(response.data);
       })
       .catch(error => {
         if (error.response && error.response.data && error.response.data.codes) {
@@ -65,7 +58,6 @@ const LogIn = () => {
         } else {
           setError('Credenciales incorrectas. Intentalo de nuevo')
         }
-        console.log('Error', error);
       })
       .finally(() => {
         setLoading(false)

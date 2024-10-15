@@ -27,11 +27,10 @@ const ChangePassword = () => {
       .then(response => {
         setMessage("Contraseña cambiada con éxito");
         navigate('/myaccount');
-        console.log('Contraseña', response.data);
+
         
       })
       .catch(error => {
-        console.log('contraseñaError', error.response?.data);
         if (error.response && error.response.data && error.response.data.details) {
           setError(error.response.data.details);
         } else {
