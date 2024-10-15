@@ -16,9 +16,7 @@ const AdminDashboard = () => {
   const Api_Base_Url = import.meta.env.VITE_URL_API;
 
   useEffect(() => {
-    console.log('Admin ID', adminId);
-    console.log('token', token);
-    
+
     const fetchData = async () => {
       if (!token || !adminId) {
         setError('No se encontraron las credenciales')

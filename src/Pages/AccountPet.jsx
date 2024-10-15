@@ -69,7 +69,7 @@ const AccountPet = () => {
         e.preventDefault();
 
         const existingPendingAppointment = appointments.some(
-            (appointment) => appointment.details.status !== 'Finalizada'
+            (appointment) => appointment.details.status !== 'completed'
         )
 
         if (existingPendingAppointment) {
@@ -110,6 +110,8 @@ const AccountPet = () => {
 
         } catch (error) {
             setError(error.message)
+            console.log(error.response?.data);
+
             setAllertMessage('Hubo un error al agendar la cita. por favor intenta de nuevo')
             setAlertType('danger')
         }
@@ -140,6 +142,31 @@ const AccountPet = () => {
         };
         fetchData();
     }, [userId, petId, token]);
+
+    const handleDeleteImage = async (e) => {
+        e.preventDefault()
+
+        try {
+            const ResponseDeleteImage = await axios.delete(`${Api_Base_utr}/api/v1/users/${userId}/pets/${petId}/image`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setDataPet((prevData) => ({
+                ...prevData,
+                appearance: {
+                    ...prevData.appearance,
+                    image: null,
+                },
+            }));
+            console.log('ResponseDeleteImage', ResponseDeleteImage.data);
+
+        } catch (error) {
+            setError(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
         const myModal = document.getElementById('myModal');
@@ -218,6 +245,7 @@ const AccountPet = () => {
                                         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             Agendar cita
                                         </button>
+                                        <button className="btn btn-danger" onClick={handleDeleteImage}>Eliminar foto</button>
                                     </div>
 
                                     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -265,7 +293,7 @@ const AccountPet = () => {
                     {appointments && appointments.length > 0 ? (
                         <ul className="list-group">
                             {appointments.map((appointment, index) => (
-                                <li key={index} className="list-group-item">
+                                <li key={index} className="list-group-item mb-5">
                                     <p>
                                         <strong>Fecha de creación:</strong>{" "}
                                         {new Date(appointment.dates.creation_date).toLocaleString()}
@@ -283,6 +311,39 @@ const AccountPet = () => {
                                     <p>
                                         <strong>Precio:</strong> ${appointment.details.price}
                                     </p>
+                                    <h5>Historial médico</h5>
+                                    {appointment.medical_history ? (
+                                        <>
+                                            <p><strong>Observaciones:</strong> {appointment.medical_history.issue || 'Ninguna observación'}</p>
+                                            <div id="carouselExampleFade" className="carousel slide carousel-fade" >
+                                                {appointment.medical_history.images.length > 0 ? (
+                                                    <>
+                                                        <div className="carousel-inner">
+                                                            {appointment.medical_history.images.map((image, index) => (
+                                                                <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                                                                    <img src={image} className="d-block w-100" alt={`Foto ${index + 1}`} />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span className="visually-hidden">Previous</span>
+                                                        </button>
+                                                        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span className="visually-hidden">Next</span>
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <p>No hay imágenes disponibles</p>
+                                                )}
+                                            </div>
+
+                                        </>
+                                    ) : (
+                                        <p>El historial aún no ha sido agregado</p>
+                                    )}
+
                                     <div className="d-flex justify-content-center align-items-center">
                                         <button className="btn btn-danger col-md-3" onClick={() => deleteAppoinment(appointment.id)}>
                                             Eliminar cita

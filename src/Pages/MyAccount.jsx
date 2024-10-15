@@ -177,7 +177,7 @@ const MyAccount = () => {
           </div>
 
           {/* Panel de Mascotas y Registro */}
-          <div className="cl-12 col-md-8 p-4">
+          <div className="col-12 col-md-8 p-4">
             <ul className="nav nav-tabs mb-3">
               <li className="nav-item">
                 <a className={`nav-link ${activeTab === 'misMascotas' ? 'active' : ''}`} onClick={() => setActiveTap('misMascotas')}> Mis mascotas </a>

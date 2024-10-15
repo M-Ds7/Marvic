@@ -10,12 +10,23 @@ const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("");
-  const [ loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { login, setToken } = useContext(MarvicContext);
   const navigate = useNavigate()
-  
+  const [showPassword, setShowPassword] = useState({
+    showCurrent: false,
+    showNew: false
+  })
+
+  const toggleShowPassword = (type) => {
+    setShowPassword({
+      ...showPassword,
+      [type]: !showPassword[type]
+    })
+  }
+
   const Api_Base_Url = import.meta.env.VITE_URL_API;
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('')
@@ -35,7 +46,7 @@ const LogIn = () => {
         console.log('UserId', userId);
         console.log('role', role);
         console.log('adminId', adminId);
-        
+
 
         setToken(token);
         login(token, userId, role, adminId);
@@ -45,7 +56,7 @@ const LogIn = () => {
         } else {
           navigate('/myaccount')
         }
-        
+
         console.log(response.data);
       })
       .catch(error => {
@@ -56,7 +67,7 @@ const LogIn = () => {
         }
         console.log('Error', error);
       })
-      .finally(() =>{
+      .finally(() => {
         setLoading(false)
       })
   }
@@ -66,7 +77,7 @@ const LogIn = () => {
       <div className="container my-4">
         <div className="row align-itmes-center">
           <div className="col-lg-6 d-none d-lg-flex justify-contet-center align-itmes-center">
-            <img src={imgMarvic} alt="imagen de servicios de marvic" className=" img-fluid rounded"/>
+            <img src={imgMarvic} alt="imagen de servicios de marvic" className=" img-fluid rounded" />
           </div>
           <div className="col-lg-6 col-md-12">
             <h2 className="text-center">Marvic</h2>
@@ -79,12 +90,17 @@ const LogIn = () => {
                 />
                 <label htmlFor="emailinput">Email</label>
               </div>
-              <div className="form-floating mb-4">
-                <input type="password" id="passwordinput" className="form-control" placeholder="**********"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <label htmlFor="passwordinput">Contraseña</label>
+              <div className="input-group mb-3">
+                <span className="input-group-text d-flex" onClick={() => toggleShowPassword('showCurrent')} style={{ cursor: 'pointer', color: 'blue', margin: '0 0 0 10px', display: 'inline-block' }}>
+                  {showPassword.showCurrent ? "Ocultar" : "Mostrar"}
+                </span>
+                <div className="form-floating">
+                  <input type={showPassword.showCurrent ? "text" : "password"} id="passwordinput" className="form-control" placeholder="**********"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <label htmlFor="passwordinput">Contraseña</label>
+                </div>
               </div>
               {error && <p className="text-danger">{error}</p>}
               <div className="d-grid gap-2">

@@ -18,6 +18,7 @@ const EditPetForm = () => {
         gender: '',
         size: '',
         weight: '',
+        image: null,
     });
     const navigate = useNavigate();
 
@@ -45,7 +46,10 @@ const EditPetForm = () => {
                     gender: petData.appearance.gender,
                     size: petData.appearance.size,
                     weight: petData.appearance.weight,
+                    image: petData.appearance.image,
                 });
+                console.log('datos', response.data);
+
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -64,7 +68,6 @@ const EditPetForm = () => {
         e.preventDefault();
         setLoading(true);
 
-        // Crear un nuevo objeto FormData
         const formData = new FormData();
         formData.append('name', dataPet.name);
         formData.append('age', dataPet.age);
@@ -74,12 +77,15 @@ const EditPetForm = () => {
         formData.append('size', dataPet.size);
         formData.append('weight', dataPet.weight);
 
+        if (dataPet.image instanceof File) {
+            formData.append('image', dataPet.image);
+        }
+
         try {
-            // Enviar la solicitud PUT con FormData
             await axios.put(`${Api_Base_Url}/api/v1/users/${userId}/pets/${petId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data',  // Importante para enviar FormData
+                    'Content-Type': 'multipart/form-data',
                 },
             });
             setSuccess(true);
@@ -106,6 +112,23 @@ const EditPetForm = () => {
             <h2 className="text-center">Modificar datos de {dataPet.name}</h2>
             {success && <div className="alert alert-success">Datos actualizados correctamente.</div>}
             <form onSubmit={handleSubmit} className="row g-3">
+
+                <div className="col-12 col-md-12" >
+                    {!dataPet.image ? (
+                        <div className="form-floating mb-3">
+                            <input
+                                type="file"
+                                className="form-control"
+                                id="imageInput"
+                                placeholder="foto"
+                                onChange={(e) => setDataPet({ ...dataPet, image: e.target.files[0] })}
+                            />
+                            <label htmlFor="imageInput">Foto de la mascota</label>
+                        </div>
+                    ) : (
+                        <p className="text-muted">Ya existe una imagen: <a href={dataPet.image} target="_blank" rel="noopener noreferrer">Ver imagen actual</a></p>
+                    )}
+                </div>
                 <div className="col-12 col-md-6">
                     <div className="form-floating mb-3">
                         <input

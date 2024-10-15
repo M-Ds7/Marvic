@@ -1,7 +1,6 @@
 
 import { useRoutes, BrowserRouter } from "react-router-dom"
 import Home from './Pages/Home'
-import Blog from './Pages/Blog'
 import MyAccount from './Pages/MyAccount'
 import LogIn from './Pages/LogIn'
 import SignUp from './Pages/SignUp'
@@ -15,11 +14,12 @@ import ChangePassword from "./Pages/ChangePassword"
 import AdminRoute from "./Context/AdminRoute"
 import AdminDashboard from "./Pages/AdminDashboard"
 import DetailsUser from "./Pages/DetailsUser"
+import AppointmentUser from "./Pages/AppointmentUser"
+import DetailsAppointment from "./Pages/DetailsAppointment"
 
 const AppRoutes = () => {
   let routes = useRoutes([
     { path: "/", element: <Home /> },
-    { path: "/blog", element: <Blog /> },
     { path: "/myaccount", element: <MyAccount /> },
     { path: "/login", element: <LogIn /> },
     { path: "/signup", element: <SignUp /> },
@@ -28,7 +28,9 @@ const AppRoutes = () => {
     { path: "/changeDataPet/:petId", element: <ChangeDataPet/>},
     { path: "/changepassword/:userId", element:<ChangePassword/> },
     { path: "/admin", element: <AdminRoute> <AdminDashboard/> </AdminRoute>},
-    { path: "/detailUser/:userId", element: <AdminRoute> <DetailsUser/> </AdminRoute>  }
+    { path: "/detailUser/:userId", element: <AdminRoute> <DetailsUser/> </AdminRoute>  },
+    { path: "/citas", element: <AdminRoute> <AppointmentUser/> </AdminRoute>},
+    { path: "/citas/:appointmentId", element: <AdminRoute> <DetailsAppointment/> </AdminRoute> }
   ])
 
   return routes
