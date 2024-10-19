@@ -53,8 +53,18 @@ const AppointmentUser = () => {
         return <p className="text-danger"> {error} </p>
     }
 
+    const getTodayDay = () => {
+        const today = new Date();
+        return today.toISOString().split('T')[0];
+    }
+
     const filteredAppointments = appointments.filter((item) => {
-        return item.details.issue.toLowerCase().includes(searchTerm.toLowerCase())
+        const appointmentDate = new Date(item.dates.creation_date).toISOString().split('T')[0];
+        const today = getTodayDay();
+
+        return(
+            appointmentDate === today && item.details.issue.toLowerCase().includes(searchTerm.toLowerCase())
+        )
       })
 
     return (
@@ -83,7 +93,7 @@ const AppointmentUser = () => {
                         </div>
                     ))
                 ): (
-                    <p className="text-center"> No se encontraron citas que coincidan con la búsqueda. </p>
+                    <p className="text-center"> No se encontraron citas que coincidan con la búsqueda, o No hay citas para el día de hoy </p>
                 )}
             </div>
         </>

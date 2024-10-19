@@ -82,18 +82,15 @@ const LogIn = () => {
                 />
                 <label htmlFor="emailinput">Email</label>
               </div>
-              <div className="input-group mb-3">
-                <span className="input-group-text d-flex" onClick={() => toggleShowPassword('showCurrent')} style={{ cursor: 'pointer', color: 'blue', margin: '0 0 0 10px', display: 'inline-block' }}>
-                  {showPassword.showCurrent ? "Ocultar" : "Mostrar"}
-                </span>
-                <div className="form-floating">
-                  <input type={showPassword.showCurrent ? "text" : "password"} id="passwordinput" className="form-control" placeholder="**********"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <label htmlFor="passwordinput">Contraseña</label>
-                </div>
+
+              <div className="form-floating mb-4">
+                <input type={showPassword.showCurrent ? "text" : "password"} id="passwordinput" className="form-control" placeholder="**********"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <label htmlFor="passwordinput">Contraseña</label>
               </div>
+
               {error && <p className="text-danger">{error}</p>}
               <div className="d-grid gap-2">
                 <button className="btn btn-primary btn-block "> {loading ? 'Iniciando sesión...' : 'Iniciar sesión'} </button>

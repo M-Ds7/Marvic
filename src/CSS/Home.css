@@ -3,12 +3,14 @@
 }
 
 .custom-carousel {
-    width: 700px;  
-    height: 600px;  
-    display: flex;
-  }
-  
-  .custom-carousel img {  
-    height: 100%;       
-    width: 100%;        
-  }
+  width: 100%; 
+  max-width: 700px; 
+  height: auto;  
+  display: flex;
+  overflow: hidden; 
+}
+
+.custom-carousel img {  
+  width: 100%;  
+  height: auto; 
+}

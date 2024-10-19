@@ -1,8 +1,8 @@
 import '../CSS/Footer.css';
 import LogoNavbar from '../Img/LogoMarvic.png';
-import MarvicFacebook from '../Img/iconFacebook.png';
-import MarvicInstagram from '../Img/iconinstagram.png';
-import MarvicTwitter from '../Img/iconTwitter-50.png';
+import MarvicFacebook from '../Img/Facebook.png';
+import MarvicInstagram from '../Img/Instagram.png';
+import MarvicTwitter from '../Img/twitter.png';
 import AddressMarvic from '../Img/marvic-address.png';
 import CallMarvic from '../Img/marvic-call.png';
 import EmailMarvic from '../Img/marvic-email.png';
@@ -10,7 +10,7 @@ import EmailMarvic from '../Img/marvic-email.png';
 const Footer = () => {
   return (
     <>
-      <footer className="bg-footer py-4">
+      <footer className="bg-footer">
         <div className='d-flex align-items-center justify-content-center mb-3'>
           <img src={LogoNavbar} alt="Logo de la empresa" width='100' height='80' className='m-4'/>
         </div>
@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
           <div className="d-flex align-items-center justify-content-center m-2 text-center">
             <img src={CallMarvic} alt="Icono de número telefónico de Marvic" width="30" height="30" className='m-2'/>
-            <p>962 243 0394</p>
+            <p>962 447 6015</p>
           </div>
           <div className="d-flex align-items-center justify-content-center m-2 text-center">
             <img src={EmailMarvic} alt="Email de Marvic" width="30" height="30" className='m-2'/>

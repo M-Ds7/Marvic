@@ -39,7 +39,7 @@ const Home = () => {
           <div id="carouselExampleSlidesOnly" className="carousel slide custom-carousel" data-bs-ride="carousel" data-bs-interval="3000">
             <div className="carousel-inner">
               <div className="carousel-item  active">
-                <img src={Calendario} alt="Imagen de calendario de vacunación" className="d-block w-100 mx-auto img-fluid" />
+                <img src={Calendario} alt="Imagen de calendario de vacunación" className="d-block w-100 mx-auto" />
                 <div className="carousel-caption">
                   <h3 className="text-black">Calendario de vacunación</h3>
                 </div>
